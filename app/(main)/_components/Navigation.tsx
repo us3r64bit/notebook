@@ -3,6 +3,7 @@ import { ElementRef, useEffect, useRef, useState } from "react";
 import { ChevronLeft, MenuIcon } from "lucide-react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
+import UserItem from "./UserItem";
 
 const Navigation = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
@@ -17,11 +18,10 @@ const Navigation = () => {
   useEffect(() => {
     if (isMobile) {
       collapse();
-    }
-    else{
+    } else {
       resetWidth();
     }
-  }, [isMobile])
+  }, [isMobile]);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
@@ -71,7 +71,7 @@ const Navigation = () => {
   };
 
   const collapse = () => {
-    if (sidebarRef.current && navbarRef.current){
+    if (sidebarRef.current && navbarRef.current) {
       setIsCollapsed(true);
       setIsResetting(true);
       sidebarRef.current.style.width = "0";
@@ -79,7 +79,7 @@ const Navigation = () => {
       navbarRef.current.style.setProperty("left", "0");
       setTimeout(() => setIsResetting(false), 300);
     }
-  }
+  };
 
   return (
     <>
@@ -102,7 +102,7 @@ const Navigation = () => {
           <ChevronLeft className="h-6 w-6" />
         </div>
         <div>
-          <p>Action Items</p>
+          <UserItem />
         </div>
         <div className="mt-4">
           <p>Documents</p>
@@ -127,7 +127,11 @@ const Navigation = () => {
       >
         <nav className="bg-transparent px-3 py-2 w-full">
           {isCollapsed && (
-            <MenuIcon onClick={() => resetWidth()} role="button" className="w-6 h-6 text-muted-foreground" />
+            <MenuIcon
+              onClick={() => resetWidth()}
+              role="button"
+              className="w-6 h-6 text-muted-foreground"
+            />
           )}
         </nav>
       </div>
