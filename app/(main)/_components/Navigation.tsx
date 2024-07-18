@@ -1,9 +1,10 @@
 import { ElementRef, useEffect, useRef, useState } from "react";
 
-import { ChevronLeft, MenuIcon } from "lucide-react";
+import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 import UserItem from "./UserItem";
+import Item from "./Item";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
@@ -106,15 +107,29 @@ const Navigation = () => {
         </div>
         <div>
           <UserItem />
+          <Item
+            label="New Note"
+            icon={PlusCircle}
+            onClick={() => {}}
+          />
+          <Item
+            label="Search"
+            icon={Search}
+            onClick={() => {}}
+            isSearch={true}
+          />
+          <Item
+            label="Setting"
+            icon={Settings}
+            onClick={() => {}}
+          />
         </div>
         <div className="mt-4">
-          {
-            documents?.map((doc) => (
-              <div key={doc._id}>
-                <p>{doc.title}</p>
-              </div>
-            )) || <p>No documents found</p>
-          }
+          {documents?.map((doc) => (
+            <div key={doc._id}>
+              <p>{doc.title}</p>
+            </div>
+          )) || <p>No documents found</p>}
         </div>
         <div
           onMouseDown={(e) => {
