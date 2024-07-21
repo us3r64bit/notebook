@@ -1,16 +1,19 @@
 import { ElementRef, useEffect, useRef, useState } from "react";
 
-import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
+import {
+  ChevronLeft,
+  MenuIcon,
+  PlusCircle,
+  Search,
+  Settings,
+} from "lucide-react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 import UserItem from "./UserItem";
 import Item from "./Item";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
 
 const Navigation = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
-  const documents = useQuery(api.documents.get);
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -107,30 +110,16 @@ const Navigation = () => {
         </div>
         <div>
           <UserItem />
-          <Item
-            label="New Note"
-            icon={PlusCircle}
-            onClick={() => {}}
-          />
+          <Item label="New Note" icon={PlusCircle} onClick={() => {}} />
           <Item
             label="Search"
             icon={Search}
             onClick={() => {}}
             isSearch={true}
           />
-          <Item
-            label="Setting"
-            icon={Settings}
-            onClick={() => {}}
-          />
+          <Item label="Setting" icon={Settings} onClick={() => {}} />
         </div>
-        <div className="mt-4">
-          {documents?.map((doc) => (
-            <div key={doc._id}>
-              <p>{doc.title}</p>
-            </div>
-          )) || <p>No documents found</p>}
-        </div>
+        <div className="mt-4"></div>
         <div
           onMouseDown={(e) => {
             handleMouseDown(e);
