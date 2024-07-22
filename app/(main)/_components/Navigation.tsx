@@ -11,6 +11,7 @@ import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 import UserItem from "./UserItem";
 import Item from "./Item";
+import { DocumentList } from "./DocumentList";
 
 const Navigation = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
@@ -119,7 +120,9 @@ const Navigation = () => {
           />
           <Item label="Setting" icon={Settings} onClick={() => {}} />
         </div>
-        <div className="mt-4"></div>
+        <div className="mt-4">
+          <DocumentList />
+        </div>
         <div
           onMouseDown={(e) => {
             handleMouseDown(e);
