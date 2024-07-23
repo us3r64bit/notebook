@@ -4,6 +4,7 @@ import {
   ChevronLeft,
   LucideTrash2,
   MenuIcon,
+  Plus,
   PlusCircle,
   Search,
   Settings,
@@ -140,16 +141,19 @@ const Navigation = () => {
             isSearch={true}
           />
           <Item label="Setting" icon={Settings} onClick={() => { }} />
-        </div>
-        <div className="mt-4">
-          <DocumentList />
-          <div className="mt-2">
             <Item
               onClick={() => handleCreate()}
               icon={PlusCircle}
-              label="New Note"
+              label="New Page"
             />
-          </div>
+        </div>
+        <div className="mt-4">
+          <DocumentList />
+          <Item
+            onClick={() => handleCreate()}
+            icon={Plus}
+            label="New Page"
+          />
         </div>
         <div
           onMouseDown={(e) => {
