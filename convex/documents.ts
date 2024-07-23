@@ -2,6 +2,18 @@ import { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
+export const getArchives = query({
+  handler: async (ctx) => {
+    const indentity = await ctx.auth.getUserIdentity();
+    if (!indentity) {
+      throw new Error("User not authenticated");
+    }
+    // const userId = indentity.subject;
+    const documents = await ctx.db.query("documents").filter((q) => q.eq(q.field("isArchived"), true)).collect();
+    return documents;
+  }
+})
+
 export const archived = mutation({
   args: {
     id: v.id("documents"),
