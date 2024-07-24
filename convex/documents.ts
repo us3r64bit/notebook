@@ -2,7 +2,7 @@ import { Doc, Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
-export const getArchives = query({
+export const getTrash = query({
   handler: async (ctx) => {
     const indentity = await ctx.auth.getUserIdentity();
     if (!indentity) {
@@ -149,7 +149,7 @@ export const create = mutation({
   },
 });
 
-export const delte = mutation({
+export const remove = mutation({
   args: {
     id: v.id("documents"),
   },

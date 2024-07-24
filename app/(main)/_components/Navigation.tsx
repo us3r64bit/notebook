@@ -18,11 +18,13 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Popover } from "@/components/ui/popover";
+import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
+import { TrashBox } from "./TrashBox";
 
 const Navigation = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
   const create = useMutation(api.documents.create);
-  const trash = useQuery(api.documents.getArchives)
   const router = useRouter();
 
   const isResizingRef = useRef(false);
@@ -48,11 +50,9 @@ const Navigation = () => {
       loading: "Creating new note...",
       success: "New note created!",
       error: "Failed to create new note",
-    })
-  }
-  const handleTrash = () => {
-    console.log(trash)
-  }
+    });
+  };
+
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -133,27 +133,22 @@ const Navigation = () => {
         </div>
         <div>
           <UserItem />
-          <Item label="New Note" icon={PlusCircle} onClick={() => { }} />
           <Item
             label="Search"
             icon={Search}
-            onClick={() => { }}
+            onClick={() => {}}
             isSearch={true}
           />
-          <Item label="Setting" icon={Settings} onClick={() => { }} />
-            <Item
-              onClick={() => handleCreate()}
-              icon={PlusCircle}
-              label="New Page"
-            />
+          <Item label="Setting" icon={Settings} onClick={() => {}} />
+          <Item
+            onClick={() => handleCreate()}
+            icon={PlusCircle}
+            label="New Page"
+          />
         </div>
         <div className="mt-4">
           <DocumentList />
-          <Item
-            onClick={() => handleCreate()}
-            icon={Plus}
-            label="New Page"
-          />
+          <Item onClick={() => handleCreate()} icon={Plus} label="New Page" />
         </div>
         <div
           onMouseDown={(e) => {
@@ -165,11 +160,17 @@ const Navigation = () => {
           className="absolute right-0 top-0 h-full w-1 cursor-ew-resize bg-primary/10 opacity-0 transition group-hover/sidebar:opacity-100"
         />
         <div className="mt-5">
-          <Item
-            onClick={() => handleTrash()}
-            icon={LucideTrash2}
-            label="Trash"
-          />
+          <Popover>
+            <PopoverTrigger className="mt-4 w-full">
+              <Item icon={LucideTrash2} label="Trash" />
+            </PopoverTrigger>
+            <PopoverContent
+              className="w-72 p-0 bg-white dark:bg-black dark:text-white"
+              side={isMobile ? "bottom" : "right"}
+            >
+              <TrashBox />
+            </PopoverContent>
+          </Popover>
         </div>
       </aside>
       <div
