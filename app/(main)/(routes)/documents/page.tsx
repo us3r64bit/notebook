@@ -25,18 +25,18 @@ const DocumentsPage = () => {
   return (
     <div className="flex h-full flex-col items-center justify-center space-y-4">
       <Image
-        src="/empty.png"
-        height={300}
-        width={300}
+        src="/createNotePage.png"
+        height={500}
+        width={500}
         className="dark:hidden"
-        alt="Empty"
+        alt="Create Note"
       />
       <Image
-        src="/empty-dark.png"
-        height={300}
-        width={300}
+        src="/createNotePage-dark.png"
+        height={500}
+        width={500}
         className="hidden dark:block"
-        alt="Empty"
+        alt="Create Note"
       />
       <h2 className="text-lg font-medium">
         Welcome to {user?.firstName}&apos;s Notebook
