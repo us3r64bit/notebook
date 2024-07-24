@@ -169,3 +169,19 @@ export const remove = mutation({
     await ctx.db.delete(args.id);
   },
 });
+
+export const getSearch = query({
+  handler: async (ctx) => {
+    const indentity = await ctx.auth.getUserIdentity();
+    if (!indentity) {
+      throw new Error("User not authenticated");
+    }
+    const userId = indentity.subject;
+    const documents = await ctx.db
+      .query("documents")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("isArchived"), false))
+      .collect();
+    return documents;
+  },
+});
