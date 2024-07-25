@@ -1,7 +1,7 @@
 "user client";
 
 import { ConfirmModal } from "@/components/modal/ConfirmModal";
-import { Spinner } from "@/components/spinner";
+import { Spinner } from "@/components/Spinner";
 import { Input } from "@/components/ui/input";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";

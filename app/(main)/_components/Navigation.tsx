@@ -25,12 +25,14 @@ import {
 } from "@/components/ui/popover";
 import { TrashBox } from "./TrashBox";
 import { useSearch } from "@/hooks/useSearch";
+import { useSettings } from "@/hooks/useSettings";
 
 const Navigation = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
   const create = useMutation(api.documents.create);
   const router = useRouter();
   const search = useSearch();
+  const settings = useSettings();
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -144,7 +146,11 @@ const Navigation = () => {
             onClick={() => search.onOpen()}
             isSearch={true}
           />
-          <Item label="Setting" icon={Settings} onClick={() => {}} />
+          <Item
+            label="Setting"
+            icon={Settings}
+            onClick={() => settings.onOpen()}
+          />
           <Item
             onClick={() => handleCreate()}
             icon={PlusCircle}
