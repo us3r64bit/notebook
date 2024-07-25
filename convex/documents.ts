@@ -185,3 +185,20 @@ export const getSearch = query({
     return documents;
   },
 });
+
+export const dropAll = mutation({
+  handler: async (ctx) => {
+    const indentity = await ctx.auth.getUserIdentity();
+    if (!indentity) {
+      throw new Error("User not authenticated");
+    }
+    const userId = indentity.subject;
+    const documents = await ctx.db
+      .query("documents")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .collect();
+    for (const document of documents) {
+      await ctx.db.delete(document._id);
+    }
+  },
+});

@@ -14,10 +14,12 @@ import {
 
 interface ConfirmModalProps {
   children: React.ReactNode;
+  modalTitle?: string;
+  modalDescription?: string;
   onConfirm: () => void;
 }
 
-export const ConfirmModal = ({ children, onConfirm }: ConfirmModalProps) => {
+export const ConfirmModal = ({ children, modalTitle, modalDescription, onConfirm }: ConfirmModalProps) => {
   const handleConfirm = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
@@ -32,9 +34,9 @@ export const ConfirmModal = ({ children, onConfirm }: ConfirmModalProps) => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+        <AlertDialogTitle>{modalTitle || "Are you absolutely sure?"}</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone.
+            {modalDescription || "This action cannot be undone."}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
