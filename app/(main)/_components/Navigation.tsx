@@ -17,7 +17,7 @@ import { DocumentList } from "./DocumentList";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   Popover,
   PopoverContent,
@@ -26,6 +26,7 @@ import {
 import { TrashBox } from "./TrashBox";
 import { useSearch } from "@/hooks/useSearch";
 import { useSettings } from "@/hooks/useSettings";
+import Navbar from "./Navbar";
 
 const Navigation = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
@@ -33,6 +34,7 @@ const Navigation = () => {
   const router = useRouter();
   const search = useSearch();
   const settings = useSettings();
+  const params = useParams();
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -192,15 +194,19 @@ const Navigation = () => {
           isMobile && "left-0 w-full",
         )}
       >
-        <nav className="bg-transparent px-3 py-2 w-full">
-          {isCollapsed && (
-            <MenuIcon
-              onClick={() => resetWidth()}
-              role="button"
-              className="w-6 h-6 text-muted-foreground"
-            />
-          )}
-        </nav>
+          {!!params.documentId ? (
+          <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
+        ) : (
+          <nav className="w-full bg-transparent px-3 py-2">
+            {isCollapsed && (
+              <MenuIcon
+                onClick={resetWidth}
+                role="button"
+                className="h-6 w-6 text-muted-foreground"
+              />
+            )}
+          </nav>
+        )}
       </div>
     </>
   );
