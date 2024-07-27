@@ -1,5 +1,34 @@
-const documentId = () => {
-  return <div>Helllo</div>;
+"use client";
+
+import { Toolbar } from "@/components/Toolbar";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+import { useQuery } from "convex/react";
+
+interface documentIdProps {
+  params: {
+    documentId: Id<"documents">;
+  };
+}
+const DocumentId = ({ params }: documentIdProps) => {
+  const document = useQuery(api.documents.getById, {
+    documentId: params.documentId,
+  });
+
+  if (document === undefined) {
+    return <div>Loading...</div>;
+  }
+  if (document === null) {
+    return <div>Not found</div>;
+  }
+  return (
+    <div className="pb-40">
+      <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
+        Something is here...
+        <Toolbar initialData={document} />
+      </div>
+    </div>
+  );
 };
 
-export default documentId;
+export default DocumentId;
