@@ -58,14 +58,13 @@ const Item = ({
     event.preventDefault();
     event.stopPropagation();
     if (!id) return;
-    const promise = archived({ id: id }).then((documentId) => {
-      toast.promise(promise, {
-        loading: "Creating a new note...",
-        success: "New note created!",
-        error: "Failed to create a note.",
-      });
-      // router.push(`/documents/${documentId}`);
+    const promise = archived({ id: id });
+    toast.promise(promise, {
+      loading: "Creating a new note...",
+      success: "New note created!",
+      error: "Failed to create a note.",
     });
+    router.push(`/documents`);
   };
 
   const handleCreate = (
@@ -79,14 +78,14 @@ const Item = ({
         if (!expanded) {
           onExpand?.();
         }
-        toast.promise(promise, {
-          loading: "Moving to Archived...",
-          success: "Note Moved to Archived!",
-          error: "Failed to Move in Archived.",
-        });
-        // router.push(`/documents/${documentId}`);
+        router.push(`/documents/${documentId}`);
       },
     );
+    toast.promise(promise, {
+      loading: "Moving to Archived...",
+      success: "Note Moved to Archived!",
+      error: "Failed to Move in Archived.",
+    });
   };
   return (
     <div
@@ -111,7 +110,7 @@ const Item = ({
       {documentIcon ? (
         <div className="mr-2 shrink-0 text-[18px]">{documentIcon}</div>
       ) : (
-        <Icon className="mr-1 h-[18px] shrink-0 text-muted-foreground" />
+        <Icon className="mr-1 h-[18px] w-[18px] shrink-0 text-muted-foreground" />
       )}
       <span className="truncate">{label}</span>
       {isSearch && (

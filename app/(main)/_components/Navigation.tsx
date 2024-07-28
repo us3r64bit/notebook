@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import UserItem from "./UserItem";
 import Item from "./Item";
 import { DocumentList } from "./DocumentList";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
@@ -53,7 +53,7 @@ const Navigation = () => {
 
   const handleCreate = () => {
     const promise = create({ title: "New Note" }).then((documentId) => {
-      // router.push(`/documents/${documentId}`)
+      router.push(`/documents/${documentId}`)
     });
     toast.promise(promise, {
       loading: "Creating new note...",

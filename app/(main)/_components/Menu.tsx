@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useMutation } from "convex/react";
-import { MoreHorizontalIcon, Trash, TrashIcon } from "lucide-react";
+import { MoreHorizontalIcon, TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
