@@ -2,6 +2,7 @@ import { ElementRef, useEffect, useRef, useState } from "react";
 
 import {
   ChevronLeft,
+  GlobeIcon,
   LucideTrash2,
   MenuIcon,
   Plus,
@@ -27,6 +28,7 @@ import { TrashBox } from "./TrashBox";
 import { useSearch } from "@/hooks/useSearch";
 import { useSettings } from "@/hooks/useSettings";
 import Navbar from "./Navbar";
+import { PublishedNotes } from "./PublishedNotes";
 
 const Navigation = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
@@ -172,16 +174,27 @@ const Navigation = () => {
           }}
           className="absolute right-0 top-0 h-full w-1 cursor-ew-resize bg-primary/10 opacity-0 transition group-hover/sidebar:opacity-100"
         />
-        <div className="mt-5">
+        <div>
           <Popover>
             <PopoverTrigger className="mt-4 w-full">
               <Item icon={LucideTrash2} label="Trash" />
             </PopoverTrigger>
             <PopoverContent
-              className="w-72 p-0 bg-white dark:bg-black dark:text-white"
+              className="w-96 p-0 bg-white dark:bg-black dark:text-white"
               side={isMobile ? "bottom" : "right"}
             >
               <TrashBox />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger className="w-full">
+              <Item icon={GlobeIcon} label="Published Notes" />
+            </PopoverTrigger>
+            <PopoverContent
+              className="w-96 p-0 bg-white dark:bg-black dark:text-white"
+              side={isMobile ? "bottom" : "right"}
+            >
+              <PublishedNotes />
             </PopoverContent>
           </Popover>
         </div>
@@ -194,7 +207,7 @@ const Navigation = () => {
           isMobile && "left-0 w-full",
         )}
       >
-          {!!params.documentId ? (
+        {!!params.documentId ? (
           <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
         ) : (
           <nav className="w-full bg-transparent px-3 py-2">

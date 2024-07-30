@@ -308,3 +308,19 @@ export const removeCover = mutation({
     return document;
   },
 });
+
+export const getPublished = query({
+  handler: async (ctx) => {
+    const indentity = await ctx.auth.getUserIdentity();
+    if (!indentity) {
+      throw new Error("User not authenticated");
+    }
+    const userId = indentity.subject;
+    const documents = await ctx.db
+      .query("documents")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("isPublished"), true))
+      .collect();
+    return documents;
+  },
+});
