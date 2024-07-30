@@ -324,3 +324,31 @@ export const getPublished = query({
     return documents;
   },
 });
+
+export const unpublishAll = mutation({
+  args: {
+    documentIds: v.array(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const indentity = await ctx.auth.getUserIdentity();
+    if (!indentity) {
+      throw new Error("User not authenticated");
+    }
+    const userId = indentity.subject;
+    const documents = await ctx.db
+      .query("documents")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("isPublished"), true))
+      .collect();
+
+    const documentIds = args.documentIds;
+    for (const document of documents) {
+      if (documentIds.includes(document._id)) {
+        await ctx.db.patch(document._id, {
+          isPublished: false,
+        });
+      }
+    }
+    return documents;
+  },
+});
