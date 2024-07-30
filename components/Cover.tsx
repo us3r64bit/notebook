@@ -9,6 +9,8 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useParams } from "next/navigation";
 import { useEdgeStore } from "@/lib/edgestore";
 import { Skeleton } from "./ui/skeleton";
+import ImageDraggable from "./ImageDraggable";
+import { useState } from "react";
 
 interface CoverImageProps {
   url?: string;
@@ -20,6 +22,16 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
   const coverImage = useCoverImage();
   const params = useParams();
   const { edgestore } = useEdgeStore();
+
+  const [isDraggable, setIsDraggable] = useState(false);
+  const handlePosition = (e: any) => {
+    console.log(e);
+    setIsDraggable(true);
+  }
+
+  const handleSave = () => {
+    setIsDraggable(false);
+  }
   const onCoverRemove = async () => {
     removeCover({
       id: params.documentId as Id<"documents">,
@@ -37,6 +49,7 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
         url && "bg-muted",
       )}
     >
+      {/* {!!url && <ImageDraggable url={url} isDraggable={isDraggable} />} */}
       {!!url && <Image src={url} fill alt="Cover" className="object-cover" />}
 
       {url && !preview && (
@@ -60,6 +73,22 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
             <span className="ml-2 hidden transition group-hover/label:block">
               Remove
             </span>
+          </Button>
+          <Button
+            onClick={handleSave}
+            className="group/label text-xs text-muted-foreground"
+            variant="outline"
+            size="sm"
+          >
+            Save
+          </Button>
+          <Button
+            onClick={handlePosition}
+            className="group/label text-xs text-muted-foreground"
+            variant="outline"
+            size="sm"
+          >
+            Position
           </Button>
         </div>
       )}
