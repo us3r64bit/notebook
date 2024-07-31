@@ -188,7 +188,7 @@ const Navigation = () => {
           </Popover>
           <Popover>
             <PopoverTrigger className="w-full">
-              <Item icon={GlobeIcon} label="Published Notes" />
+              <Item icon={GlobeIcon} label="Publishes" />
             </PopoverTrigger>
             <PopoverContent
               className="w-96 p-0 bg-white dark:bg-black dark:text-white"
