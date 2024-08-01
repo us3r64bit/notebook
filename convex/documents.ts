@@ -358,15 +358,19 @@ export const getPublished = query({
 });
 
 export const getBookmarks = query({
-  handler: async (ctx) => {
+  args: {
+    parentDocument: v.optional(v.id("documents")),
+  },
+  handler: async (ctx, args) => {
     const indentity = await ctx.auth.getUserIdentity();
     if (!indentity) {
       throw new Error("User not authenticated");
     }
     const userId = indentity.subject;
+    //  TODO: add recursive bookmark
     const documents = await ctx.db
       .query("documents")
-      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .withIndex("by_user_parent", (q) => q.eq("userId", userId).eq("parentDocument", args.parentDocument))
       .filter((q) => q.eq(q.field("isBookmarked"), true))
       .collect();
     return documents;

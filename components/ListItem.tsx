@@ -6,26 +6,26 @@ import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { useMutation } from "convex/react";
 import {
+    Bookmark,
     ChevronDown,
     ChevronRight,
     LucideIcon,
-    Plus,
     Trash2Icon,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 interface ListItemProps {
-    id?: Id<"documents">;
+    id: Id<"documents">;
     documentIcon?: string;
     active?: boolean;
     expanded?: boolean;
-    isSearch?: boolean;
     level?: number;
     onExpand?: () => void;
     label: string;
     onClick?: () => void;
     icon: LucideIcon;
+    bookmarked?: boolean
 }
 
 const ListItem = ({
@@ -36,14 +36,14 @@ const ListItem = ({
     active,
     documentIcon,
     level = 0,
-    isSearch,
     onExpand,
     expanded,
+    bookmarked,
 }: ListItemProps) => {
-    const create = useMutation(api.documents.create);
+    const archived = useMutation(api.documents.archived);
+    const update = useMutation(api.documents.update);
     const router = useRouter();
     const ChevronIcon = expanded ? ChevronDown : ChevronRight;
-    const archived = useMutation(api.documents.archived);
 
     const handleExpand = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -52,6 +52,7 @@ const ListItem = ({
         event.stopPropagation();
         onExpand?.();
     };
+
     const handleArchived = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     ) => {
@@ -67,75 +68,68 @@ const ListItem = ({
         router.push(`/documents`);
     };
 
-    const handleCreate = (
-        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    ) => {
-        event.preventDefault();
-        event.stopPropagation();
-        if (!id) return;
-        const promise = create({ title: "New Note", parentDocument: id }).then(
-            (documentId) => {
-                if (!expanded) {
-                    onExpand?.();
-                }
-                router.push(`/documents/${documentId}`);
-            },
-        );
+    const handleUnBookmark = () => {
+        const promise = update({
+            id: id,
+            isBookmarked: false
+        })
         toast.promise(promise, {
-            loading: "Moving to Archived...",
-            success: "Note Moved to Archived!",
-            error: "Failed to Move in Archived.",
-        });
-    };
+            loading: "Removing document from Bookmarks",
+            success: "Removed document from Bookmarks",
+            error: "Failed to remove from Bookmarks",
+        })
+    }
+
     return (
         <div
             onClick={onClick}
             role="button"
             style={{ paddingLeft: level ? `${level * 12 + 12}px` : "12px" }}
             className={cn(
-                "group flex min-h-[27px] w-full items-center py-1 pr-3 text-sm font-medium text-muted-foreground hover:bg-primary/5",
+                "group flex min-h-[27px] w-full items-center py-2 pr-3 text-sm font-medium text-muted-foreground hover:bg-primary/5",
                 active && "bg-primary/5 text-primary",
             )}
         >
-            {!!id && (
-                <div
-                    onClick={(e) => handleExpand(e)}
-                    role="button"
-                    className="mr-1 h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
-                >
-                    <ChevronIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
-                </div>
-            )}
+            <div
+                onClick={(e) => handleExpand(e)}
+                role="button"
+                className="mr-1 h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+            >
+                <ChevronIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
+            </div>
 
             {documentIcon ? (
                 <div className="mr-2 shrink-0 text-[18px]">{documentIcon}</div>
             ) : (
                 <Icon className="mr-1 h-[18px] w-[18px] shrink-0 text-muted-foreground" />
             )}
+
             <span className="truncate">{label}</span>
-            {isSearch && (
-                <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                    ctrl + K
-                </kbd>
-            )}
-            {!!id && (
-                <div className="ml-auto flex items-center gap-x-2">
-                    <div
+            <div className="ml-auto flex items-center gap-x-2 mr-8">
+                <div
+                    role="button"
+                    onClick={(e) => { }}
+                    className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-200 dark:hover:bg-neutral-600"
+                >
+                    <Bookmark
+                        className={
+                            cn(
+                                "w-4 h-4 hover:fill-black",
+                                bookmarked && "fill-black hover:opacity-60"
+                            )
+                        }
                         role="button"
-                        onClick={(e) => handleCreate(e)}
-                        className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-200 dark:hover:bg-neutral-600"
-                    >
-                        <Plus className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                    <div
-                        role="button"
-                        onClick={(e) => handleArchived(e)}
-                        className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-200 dark:hover:bg-neutral-600"
-                    >
-                        <Trash2Icon className="h-4 w-4 text-muted-foreground hover:text-red-500" />
-                    </div>
+                        onClick={() => handleUnBookmark()}
+                    />
                 </div>
-            )}
+                <div
+                    role="button"
+                    onClick={(e) => handleArchived(e)}
+                    className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-200 dark:hover:bg-neutral-600"
+                >
+                    <Trash2Icon className="h-4 w-4 text-muted-foreground hover:text-red-500" />
+                </div>
+            </div>
         </div>
     );
 };

@@ -1,6 +1,7 @@
 import { ElementRef, useEffect, useRef, useState } from "react";
 
 import {
+  Bookmark,
   ChevronLeft,
   GlobeIcon,
   LucideTrash2,
@@ -154,6 +155,11 @@ const Navigation = () => {
             label="Setting"
             icon={Settings}
             onClick={() => settings.onOpen()}
+          />
+          <Item
+            label="Bookmarks"
+            icon={Bookmark}
+            onClick={() => router.push("/bookmarks")}
           />
           <Item
             onClick={() => handleCreate()}

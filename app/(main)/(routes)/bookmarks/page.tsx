@@ -3,10 +3,12 @@
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import Image from "next/image";
-import { DocumentList } from "../../_components/DocumentList";
+import { ListView } from "@/components/ListView";
 
 const BookmarksPage = () => {
-    const bookmarks = useQuery(api.documents.getBookmarks);
+    const bookmarks = useQuery(api.documents.getBookmarks, {
+
+    });
     return (
         <>
 
@@ -35,7 +37,11 @@ const BookmarksPage = () => {
             }
             {
                 // PUT some image here to push list little bit lower.
-                !!bookmarks && <DocumentList />
+                !!bookmarks && (
+                    <div className="mt-48">
+                        <ListView />
+                    </div>
+                )
             }
         </>
     );
