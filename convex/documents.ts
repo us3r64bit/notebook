@@ -370,7 +370,9 @@ export const getBookmarks = query({
     //  TODO: add recursive bookmark
     const documents = await ctx.db
       .query("documents")
-      .withIndex("by_user_parent", (q) => q.eq("userId", userId).eq("parentDocument", args.parentDocument))
+      .withIndex("by_user_parent", (q) =>
+        q.eq("userId", userId).eq("parentDocument", args.parentDocument),
+      )
       .filter((q) => q.eq(q.field("isBookmarked"), true))
       .collect();
     return documents;

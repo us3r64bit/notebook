@@ -16,11 +16,7 @@ interface EditorProps {
   initialContent?: string;
   editable?: boolean;
 }
-const Editor = ({
-  documentId,
-  initialContent,
-  editable,
-}: EditorProps) => {
+const Editor = ({ documentId, initialContent, editable }: EditorProps) => {
   const update = useMutation(api.documents.update);
   const { edgestore } = useEdgeStore();
   const { resolvedTheme } = useTheme();

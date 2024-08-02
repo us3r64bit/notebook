@@ -16,16 +16,16 @@ export const Banner = ({ documentId }: BannerProps) => {
   const router = useRouter();
 
   const onRemove = () => {
-    const promise = remove({ id: documentId })
+    const promise = remove({ id: documentId });
     toast.promise(promise, {
       loading: "Deleting note...",
       success: "Note Deleted Forever!",
       error: " Failed to Delete note.",
     });
-    router.push("/documents")
+    router.push("/documents");
   };
   const onRestore = () => {
-    const promise = restore({ id: documentId })
+    const promise = restore({ id: documentId });
     toast.promise(promise, {
       loading: "Restoring note...",
       success: "Note restored!",

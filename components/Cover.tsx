@@ -27,11 +27,11 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
   const handlePosition = (e: any) => {
     console.log(e);
     setIsDraggable(true);
-  }
+  };
 
   const handleSave = () => {
     setIsDraggable(false);
-  }
+  };
   const onCoverRemove = async () => {
     removeCover({
       id: params.documentId as Id<"documents">,

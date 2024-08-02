@@ -1,7 +1,6 @@
 {
-  "singleQuote": false,
-  "trailingComma": "none",
-  "arrowParens": "avoid",
+  "trailingComma": "all",
+  "arrowParens": "always",
   "proseWrap": "preserve",
   "quoteProps": "as-needed",
   "bracketSameLine": false,

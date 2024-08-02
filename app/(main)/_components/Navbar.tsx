@@ -31,22 +31,21 @@ function Navbar({ isCollapsed, onResetWidth }: NavbarProps) {
     const promise = update({
       id: params.documentId as Id<"documents">,
       isBookmarked: bookmarked,
-    })
+    });
     if (bookmarked) {
       toast.promise(promise, {
         loading: "Adding document in Bookmarks",
         success: "Added document in Bookmarks",
         error: "Failed to add in Bookmarks",
       });
-    }
-    else {
+    } else {
       toast.promise(promise, {
         loading: "Removing document from Bookmarks",
         success: "Removed document from Bookmarks",
         error: "Failed to remove from Bookmarks",
       });
     }
-  }
+  };
 
   if (document === undefined) {
     return (
@@ -77,12 +76,10 @@ function Navbar({ isCollapsed, onResetWidth }: NavbarProps) {
           <div className="flex items-center gap-x-2">
             <Publish initialData={document} />
             <Bookmark
-              className={
-                cn(
-                  "w-4 h-4 hover:fill-black",
-                  document?.isBookmarked && "fill-black"
-                )
-              }
+              className={cn(
+                "w-4 h-4 hover:fill-black",
+                document?.isBookmarked && "fill-black",
+              )}
               role="button"
               onClick={() => toggleBookmark()}
             />

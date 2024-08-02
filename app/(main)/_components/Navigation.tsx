@@ -56,7 +56,7 @@ const Navigation = () => {
 
   const handleCreate = () => {
     const promise = create({ title: "New Note" }).then((documentId) => {
-      router.push(`/documents/${documentId}`)
+      router.push(`/documents/${documentId}`);
     });
     toast.promise(promise, {
       loading: "Creating new note...",

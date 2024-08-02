@@ -26,7 +26,7 @@ export const Heading = () => {
       {isLoading && (
         <>
           <div className="w-full flex items-center justify-center">
-            <Spinner size={"lg"}/>
+            <Spinner size={"lg"} />
           </div>
         </>
       )}

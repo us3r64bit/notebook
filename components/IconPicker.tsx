@@ -29,16 +29,14 @@ export const IconPicker = ({
 
   return (
     <Popover>
-        <PopoverTrigger asChild={asChild}>
-            {children}
-        </PopoverTrigger>
-        <PopoverContent>
-            <EmojiPicker 
-            height={350}
-            theme={theme}
-            onEmojiClick={(data) => onChange(data.emoji)}
-            />
-        </PopoverContent>
+      <PopoverTrigger asChild={asChild}>{children}</PopoverTrigger>
+      <PopoverContent>
+        <EmojiPicker
+          height={350}
+          theme={theme}
+          onEmojiClick={(data) => onChange(data.emoji)}
+        />
+      </PopoverContent>
     </Popover>
-  )
+  );
 };
