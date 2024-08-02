@@ -108,16 +108,16 @@ const ListItem = ({
       <div className="ml-auto flex items-center gap-x-2 mr-8">
         <div
           role="button"
-          onClick={(e) => {}}
-          className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-200 dark:hover:bg-neutral-600"
+          onClick={() => handleUnBookmark()}
+          className={cn(
+            "opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-200 dark:hover:bg-neutral-600",
+          )}
         >
           <Bookmark
             className={cn(
               "w-4 h-4 hover:fill-black",
               bookmarked && "fill-black hover:opacity-60",
             )}
-            role="button"
-            onClick={() => handleUnBookmark()}
           />
         </div>
         <div

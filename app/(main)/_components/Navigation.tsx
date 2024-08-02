@@ -148,28 +148,47 @@ const Navigation = () => {
           <Item
             label="Search"
             icon={Search}
-            onClick={() => search.onOpen()}
+            onClick={() => {
+              search.onOpen();
+              isMobile ? collapse() : undefined;
+            }}
             isSearch={true}
           />
           <Item
             label="Setting"
             icon={Settings}
-            onClick={() => settings.onOpen()}
+            onClick={() => {
+              settings.onOpen();
+              isMobile ? collapse() : undefined;
+            }}
           />
           <Item
             label="Bookmarks"
             icon={Bookmark}
-            onClick={() => router.push("/bookmarks")}
+            onClick={() => {
+              router.push("/bookmarks");
+              isMobile ? collapse() : undefined;
+            }}
           />
           <Item
-            onClick={() => handleCreate()}
+            onClick={() => {
+              handleCreate();
+              isMobile ? collapse() : undefined;
+            }}
             icon={PlusCircle}
             label="New Page"
           />
         </div>
         <div className="mt-4">
           <DocumentList />
-          <Item onClick={() => handleCreate()} icon={Plus} label="New Page" />
+          <Item
+            onClick={() => {
+              handleCreate();
+              isMobile ? collapse() : undefined;
+            }}
+            icon={Plus}
+            label="New Page"
+          />
         </div>
         <div
           onMouseDown={(e) => {

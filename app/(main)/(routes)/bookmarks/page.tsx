@@ -9,7 +9,7 @@ const BookmarksPage = () => {
   const bookmarks = useQuery(api.documents.getBookmarks, {});
   return (
     <>
-      {!bookmarks && (
+      {!bookmarks?.length && (
         <div className="flex h-full flex-col items-center justify-center space-y-4">
           <Image
             src="/bookmarks.png"
@@ -32,7 +32,7 @@ const BookmarksPage = () => {
       )}
       {
         // PUT some image here to push list little bit lower.
-        !!bookmarks && (
+        !!bookmarks?.length && (
           <div className="mt-48">
             <ListView />
           </div>
